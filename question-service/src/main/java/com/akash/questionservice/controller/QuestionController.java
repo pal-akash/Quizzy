@@ -52,7 +52,7 @@ public class QuestionController {
     // getScore
 
     @GetMapping("generate")
-    public ResponseEntity<List<Integer>> getQuestionsForQuiz(@RequestParam String category, @RequestParam Integer numOfQuestions){
+    public ResponseEntity<List<Long>> getQuestionsForQuiz(@RequestParam String category, @RequestParam Integer numOfQuestions){
         return questionService.getQuestionsForQuiz(category, numOfQuestions);
     }
 
