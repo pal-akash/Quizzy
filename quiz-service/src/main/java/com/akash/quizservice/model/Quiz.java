@@ -14,6 +14,6 @@ public class Quiz {
     private Long id;
     private String title;
 
-    @ManyToMany
-    private List<Question> questionsList;
+    @ElementCollection
+    private List<Long> questionIds;
 }

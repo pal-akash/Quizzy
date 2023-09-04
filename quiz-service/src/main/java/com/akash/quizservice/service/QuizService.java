@@ -1,6 +1,7 @@
 package com.akash.quizservice.service;
 
 import com.akash.quizservice.dao.QuizDao;
+import com.akash.quizservice.feign.QuizInterface;
 import com.akash.quizservice.model.QuestionWrapper;
 import com.akash.quizservice.model.Quiz;
 import com.akash.quizservice.model.UserResponse;
@@ -19,19 +20,17 @@ public class QuizService {
     @Autowired
     QuizDao quizDao;
 
-//    @Autowired
-//    QuestionDao questionDao;
+    @Autowired
+    QuizInterface quizInterface;
 
 
     public ResponseEntity<String> createQuiz(String category, Integer numQ, String title) {
 
-//        List<Integer> questionsForQuiz = // call the generate url from the question service - RestTemplate - http://localhost:8080/question/generate
-//
-//        Quiz quiz = new Quiz();
-//        quiz.setTitle(title);
-//        quiz.setQuestionsList(questionsForQuiz);
-//
-//        quizDao.save(quiz);
+        List<Long> questions = quizInterface.getQuestionsForQuiz(category, numQ).getBody();
+        Quiz quiz = new Quiz();
+        quiz.setTitle(title);
+        quiz.setQuestionIds(questions);
+        quizDao.save(quiz);
 
         return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
